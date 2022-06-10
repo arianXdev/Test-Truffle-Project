@@ -1,9 +1,24 @@
 // SPDX-License-Identifier: GPL-3
 pragma solidity ^0.8.0;
 
+import './RWD.sol';
+import './Tether.sol';
+
+/**
+ * @title Decentralized Bank
+ * @notice A Decentralized bank where you can deposit your money and take reward
+ * @dev It interacts with Tether and RWD tokens as well
+ * @author Arian
+ */
 contract DecentralBank {
 	string public name = "Decentral Bank";
 	address public owner;
 
-	
+	Tether public tether;
+	RWD public rwd;
+
+	constructor(RWD _rwd, Tether _tether) {
+		rwd = _rwd;
+		tether = _tether;
+	}
 }
