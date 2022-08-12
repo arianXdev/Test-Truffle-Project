@@ -19,10 +19,9 @@ contract DecentralBank {
 	
 	mapping(address => uint) public stakingBalance;
 
-	constructor(RWD _rwd, Tether _tether, string memory _name) {
+	constructor(RWD _rwd, Tether _tether) {
 		rwd = _rwd;
 		tether = _tether;
-		name = _name;
 	}
 
 	/// @notice A staking function which allows you to deposit your money (tokens) and take reward
