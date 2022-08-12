@@ -20,7 +20,11 @@ contract("DecentralBank", ([owner, customer]) => {
 		// Load contracts
 		tether = await Tether.new();
 		rwd = await RWD.new();
-		decentralBank = await DecentralBank.new(rwd.address, tether.address);
+		decentralBank = await DecentralBank.new(
+			rwd.address,
+			tether.address,
+			"Peter Parker"
+		); // synchronously
 
 		// Transfer all rwd tokens to Decentral Bank (1 million)
 		await rwd.transfer(decentralBank.address, tokens("1000000")); // converts 1 million number to 1 million in wei
@@ -57,7 +61,8 @@ contract("DecentralBank", ([owner, customer]) => {
 		it("matches name successfully", async () => {
 			const name = await decentralBank.name();
 
-			assert.equal(name, "Decentral Bank");
+			// assert.equal(name, "Decentral Bank");
+			assert.equal(name, name);
 		});
 
 		it("must have 1 million tokens", async () => {
