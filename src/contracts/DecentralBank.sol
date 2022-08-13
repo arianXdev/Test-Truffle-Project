@@ -24,11 +24,5 @@ contract DecentralBank {
 		tether = _tether;
 	}
 
-	/// @notice A staking function which allows you to deposit your money (tokens) and take reward
-	function deposit(uint _amount) public {
-		// Transfer tether tokens to this contract address for staking
-		tether.transferFrom(msg.sender, address(this), _amount);
-
-		stakingBalance[msg.sender] += _amount;
-	}
+	/// @notice A staking function that allows you to deposit your money (tokens) and take a reward
 }

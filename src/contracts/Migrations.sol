@@ -16,7 +16,7 @@ contract Migrations {
         // _;
     }
 
-    // only owner can call this function (the person who is calling the contract)
+    // only the owner can call this function (the person who is calling the contract)
     function setCompleted(uint256 completed) public restricted {
         last_completed_migration = completed;
     }

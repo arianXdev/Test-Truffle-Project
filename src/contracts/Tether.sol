@@ -19,7 +19,7 @@ contract Tether {
     /// @notice uses whenever we have a successful transfer call
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
-    /// We're going to use some mapping in order to keep track of balance
+    /// We're going to use some mapping in order to keep track of the balance
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
 
@@ -27,8 +27,8 @@ contract Tether {
         balanceOf[msg.sender] = totalSupply;
     }
 
-    /// @notice uses to transfer an amount to a receiver (ethereum account)
-    /// @dev returns a boolean if the transcation is succeed
+    /// @notice uses to transfer an amount to a receiver (Ethereum account)
+    /// @dev returns a boolean if the transaction is succeed
     function transfer(address payable _to, uint256 _value) public payable returns (bool success) {
         /// @notice Requires that the value has to be greater than or equal to the balance for transfer
         require(balanceOf[msg.sender] >= _value, "Your balance is not enough!");
