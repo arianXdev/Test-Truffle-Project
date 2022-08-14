@@ -13,7 +13,7 @@ contract("DecentralBank", ([owner, customer]) => {
 	let tether, reward, decentralBank;
 
 	// A function which returns every number you pass in Wei
-	let convertToWei = (number) => web3.utils.toWei(number);
+	const convertToWei = (number) => web3.utils.toWei(number);
 
 	// What before can actually do for us is that any code that we add to before for our tests will essentially run first before anything.
 	// We actually use the before method to initialize our contracts
@@ -47,6 +47,12 @@ contract("DecentralBank", ([owner, customer]) => {
 
 			assert.equal(name, "Tether");
 		});
+
+		it("the customer has 100 USDT tokens", async () => {
+			let balance = await tether.balanceOf(customer);
+
+			assert.equal(balance, convertToWei("100"));
+		});
 	});
 
 	describe("Reward Deployment", async () => {
@@ -58,6 +64,20 @@ contract("DecentralBank", ([owner, customer]) => {
 			const name = await reward.name();
 
 			assert.equal(name, "Reward Token");
+		});
+	});
+
+	describe("DecentralBank Deployment", async () => {
+		it("matches name successfully", async () => {
+			const name = await decentralBank.name();
+
+			assert.equal(name, "Decentral Bank");
+		});
+
+		it("the contract has the 1 million RWD tokens", async () => {
+			let balance = await reward.balanceOf(decentralBank.address);
+
+			assert.equal(balance, convertToWei("1000000"));
 		});
 	});
 });
