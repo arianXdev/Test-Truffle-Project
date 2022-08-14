@@ -2,7 +2,7 @@ const Tether = artifacts.require("Tether");
 const RWD = artifacts.require("RWD");
 const DecentralBank = artifacts.require("DecentralBank");
 
-module.exports = async function(deployer, network, accounts) {
+module.exports = async (deployer, network, accounts) => {
 	// Deploys Tether contract
 	await deployer.deploy(Tether);
 	const tether = await Tether.deployed();
@@ -17,9 +17,9 @@ module.exports = async function(deployer, network, accounts) {
 	const decentralBank = await DecentralBank.deployed();
 
 	// Transfer all RWD tokens to Decentral Bank
-	// DecentralBank.address gives the contract address
+	// NOTE: decentralBank.address gives the contract address
 	await rwd.transfer(decentralBank.address, "1000000000000000000000000"); // 1 million tokens
 
 	// Distribute 100 Tether tokens to investor
-	await tether.transfer(accounts[1], "100000000000000000000"); // 100 tokens
+	await tether.transfer(accounts[1], "100000000000000000000"); // 100 tether tokens
 };

@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 /**
  * @title Tether token
  * @author Arian Hosseini
- * @notice it's a stable coin that we use in our DApp to interact
+ * @notice it's a stablecoin that we use in our DApp to interact
  */
 contract Tether {
     string public name = "Tether";
