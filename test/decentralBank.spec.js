@@ -6,7 +6,9 @@ const RWD = artifacts.require("RWD");
 const DecentralBank = artifacts.require("DecentralBank");
 
 // The Second thing is bringing in Chai which is an Assertion Library
-require("chai");
+require("chai")
+	.use(require("chai-as-promised"))
+	.should();
 
 // Remember this is a test file for the decentralBank contract (the skeleton)
 // With assertions we can check different kinds of things.
@@ -35,9 +37,7 @@ contract("DecentralBank", ([owner, customer]) => {
 		await reward.transfer(decentralBank.address, convertToWei("1000000"));
 
 		// Transferring 100 Tether tokens to investor (customer)
-		await tether.transfer(customer, convertToWei("100"), {
-			from: owner,
-		});
+		await tether.transfer(customer, convertToWei("100"));
 	});
 
 	// it's a description of our test
@@ -82,6 +82,7 @@ contract("DecentralBank", ([owner, customer]) => {
 			// Checking investor's balance
 			let result;
 
+			// Check the customer's balance
 			result = await tether.balanceOf(customer);
 			assert.equal(
 				result,
@@ -123,6 +124,34 @@ contract("DecentralBank", ([owner, customer]) => {
 				true,
 				"Customer is staking status after staking"
 			);
+		});
+
+		it("Issue Tokens", async () => {
+			await decentralBank.issueTokens({
+				from: owner,
+			});
+
+			// Ensure only the owner can issue tokens
+			await decentralBank.issueTokens({ from: customer }).should.be
+				.rejected;
+		});
+
+		it("Unstake Tokens", async () => {
+			let result;
+			// Unstake tokens
+			await decentralBank.unstakeTokens({ from: customer });
+
+			// Check the balance of decentralBank
+			result = await tether.balanceOf(decentralBank.address);
+			assert.equal(result, convertToWei("0"));
+
+			// Check the customer's balance
+			result = await tether.balanceOf(customer);
+			assert.equal(result, convertToWei("100"));
+
+			// Check is staking
+			result = await decentralBank.isStaking(customer);
+			assert.equal(result, false);
 		});
 	});
 });
