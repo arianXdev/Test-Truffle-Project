@@ -17,12 +17,33 @@ contract DecentralBank {
 	Tether public tether;
 	RWD public rwd;
 	
+	address[] public stakers;
+
+	// Keep track of investor's deposit
 	mapping(address => uint) public stakingBalance;
+	mapping(address => bool) public hasStaked;
+	mapping(address => bool) public isStaking;
 
 	constructor(RWD _rwd, Tether _tether) {
 		rwd = _rwd;
 		tether = _tether;
 	}
 
-	/// @notice A staking function that allows you to deposit your money (tokens) and take a reward
+	/// @notice It's going to transfer investor's tether tokens to this contract for staking (deposit USDT tokens in our DApp)
+	function depositTokens(uint _amount) public {
+		// require staking amount to be greater than zero
+		require(_amount > 0, "The amount cannot be less than or equal to 0!");
+
+		tether.transferFrom(msg.sender, address(this), _amount);
+
+		// Keep track of how much the investor wants to deposit
+		stakingBalance[msg.sender] += _amount;
+
+		if(!hasStaked[msg.sender]) {
+			stakers.push(msg.sender);
+		}
+
+		isStaking[msg.sender] = true;
+		hasStaked[msg.sender] = true;
+	}
 }

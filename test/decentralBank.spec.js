@@ -1,3 +1,5 @@
+const { assert } = require("chai");
+
 // The First thing is bringing in our contracts in JavaScript files using artifacts.require() method
 const Tether = artifacts.require("Tether");
 const RWD = artifacts.require("RWD");
@@ -47,12 +49,6 @@ contract("DecentralBank", ([owner, customer]) => {
 
 			assert.equal(name, "Tether");
 		});
-
-		it("the customer has 100 USDT tokens", async () => {
-			let balance = await tether.balanceOf(customer);
-
-			assert.equal(balance, convertToWei("100"));
-		});
 	});
 
 	describe("Reward Deployment", async () => {
@@ -78,6 +74,55 @@ contract("DecentralBank", ([owner, customer]) => {
 			let balance = await reward.balanceOf(decentralBank.address);
 
 			assert.equal(balance, convertToWei("1000000"));
+		});
+	});
+
+	describe("Yield Farming", async () => {
+		it("Reward tokens for staking", async () => {
+			// Checking investor's balance
+			let result;
+
+			result = await tether.balanceOf(customer);
+			assert.equal(
+				result,
+				convertToWei("100"),
+				"Investor USDT Balance before staking"
+			);
+
+			// We need to approve access to our wallet
+			await tether.approve(decentralBank.address, convertToWei("50"), {
+				from: customer,
+			});
+
+			// Check Staking for customer
+			await decentralBank.depositTokens(convertToWei("50"), {
+				from: customer,
+			}); // we wanna deposit 50 USDT
+
+			// Check updated balance of customer
+			result = await tether.balanceOf(customer);
+			assert.equal(
+				result,
+				convertToWei("50"),
+				"Investor USDT Balance before staking"
+			);
+
+			// Check the updated balance of decentralBank
+			result = await tether.balanceOf(decentralBank.address);
+
+			assert.equal(
+				result,
+				convertToWei("50"),
+				"Decentral Bank USDT Balance after staking from customer"
+			);
+
+			// Check Is staking balance
+			result = await decentralBank.isStaking(customer);
+			assert.equal(
+				result,
+				true,
+				"Customer is staking status after staking"
+			);
 		});
 	});
 });
