@@ -85,5 +85,4 @@ contract DecentralBank {
 		// Update our staking status
 		isStaking[msg.sender] = false;
 	}
-
 }
