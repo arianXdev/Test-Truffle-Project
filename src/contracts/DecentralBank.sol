@@ -30,6 +30,7 @@ contract DecentralBank {
 	mapping(address => bool) public hasStaked;
 	mapping(address => bool) public isStaking;
 
+	// A constructor in Solidity is a special function that is used to initialize state variables in a contract.
 	constructor(RWD _rwd, Tether _tether) {
 		rwd = _rwd;
 		tether = _tether;
@@ -39,7 +40,7 @@ contract DecentralBank {
 	/// @notice It's going to transfer investor's tether tokens to this contract for staking (deposit USDT tokens in our DApp)
 	function depositTokens(uint _amount) public {
 		// require staking amount to be greater than zero
-		require(_amount > 0, "The amount cannot be less than or equal to 0!");
+		require(_amount > 0, "The amount cannot be less than or equal to 0!"); // this line of code needs to be true to continue
 
 		tether.transferFrom(msg.sender, address(this), _amount);
 
@@ -62,6 +63,7 @@ contract DecentralBank {
 			address recipient = stakers[i];
 			uint balance = stakingBalance[recipient]; // the balance of recipient
 
+			// if they staked in our DApp
 			if (balance > 0) {
 				rwd.transfer(payable(recipient), balance/9); // if they stake 27 USDT tokens, they're gonna get 9 RWD (one ninth of that)
 			}
@@ -70,10 +72,10 @@ contract DecentralBank {
 
 	/// @notice Customers can unstake or take their tokens back
 	function unstakeTokens() public {
-		// the balance of our customer (the person who's calling the function)
+		// the staking balance of our customer (the person who's calling the function)
 		uint balance = stakingBalance[msg.sender];
 		// Require the amount to be greater than 0
-		require(balance > 0, "Staking Balance cannot be less or equal to 0");
+		require(balance > 0, "You're not staked! Please deposit!");
 
 		// Transfer tokens to the specified contract address from our bank
 		// Transfer customer's staked tokens to their account
