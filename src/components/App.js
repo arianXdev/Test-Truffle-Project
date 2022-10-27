@@ -1,15 +1,11 @@
-import React, { Component } from "react";
-import "./App.css";
+import { useState } from "react";
 
-class App extends Component {
-	// Our react code goes in here!
-	render() {
-		return (
-			<div className="text-center text-primary">
-				<h1>Hello, World!</h1>
-			</div>
-		);
-	}
-}
+const App = () => {
+	return (
+		<div>
+			<h1>Hello World!</h1>
+		</div>
+	);
+};
 
 export default App;
