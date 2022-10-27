@@ -5,7 +5,7 @@ const Navbar = () => {
 		<nav className="navbar">
 			<div className="container">
 				<div className="navbar__content">
-					<h1 className="title">Decentraliezd Application</h1>
+					<h1 className="title">DApp Yield Staking (Decentralized Banking)</h1>
 
 					<ul>
 						<li>
