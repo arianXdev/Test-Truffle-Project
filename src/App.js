@@ -20,9 +20,17 @@ const App = () => {
 		}
 	};
 
+	const loadBlockchainData = async () => {
+		const web3 = window.web3;
+		const account = await web3.eth.getAccounts();
+
+		console.log(account);
+	};
+
 	useEffect(() => {
 		const fetchData = async () => {
 			await loadWeb3();
+			await loadBlockchainData();
 		};
 
 		fetchData();
