@@ -1,0 +1,19 @@
+.navbar {
+	width: 100%;
+	padding: 15px 0;
+	color: #fff;
+	font-size: 16px;
+	background-color: #333;
+	box-shadow: 0 0 20px rgba(34, 34, 34, 0.568);
+}
+
+.navbar__content {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.title {
+	font-size: 1em;
+	display: block;
+}
