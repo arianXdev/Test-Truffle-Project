@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { Navbar } from "./components";
+
+import "./App.css";
 
 const App = () => {
 	return (
 		<div>
-			<h1>Hello World!</h1>
+			<Navbar />
 		</div>
 	);
 };
