@@ -15,7 +15,7 @@ module.exports = {
 	contracts_directory: "./src/contracts",
 
 	// The path of all our JSON Files
-	contracts_build_directory: "./src/truffle_abis",
+	contracts_build_directory: "./build/contracts",
 
 	compilers: {
 		solc: {
