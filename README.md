@@ -1,2 +1,2 @@
 # Test Truffle Project
-This is a test project using Truffle + React!
+This is just a simple test project using Truffle + React!
